@@ -164,6 +164,13 @@
       box-shadow: var(--shadow-sm);
       padding: 14px 0;
     }
+    .navbar-progress {
+      position: absolute; bottom: 0; left: 0; height: 3px;
+      background: linear-gradient(90deg, var(--accent), #7c4ff8, var(--accent));
+      width: 0%;
+      transition: width .1s ease-out;
+      box-shadow: 0 0 16px rgba(79,140,255,0.4);
+    }
     .navbar-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
     .nav-logo {
       display: flex; align-items: center; gap: 10px;
@@ -268,6 +275,7 @@
       top: -100px; left: -100px;
       background: radial-gradient(ellipse, rgba(79,140,255,0.12) 0%, transparent 65%);
       pointer-events: none; z-index: 0;
+      will-change: transform;
     }
     .hero-glow-2 {
       position: absolute; width: 500px; height: 500px;
@@ -275,6 +283,7 @@
       background: radial-gradient(ellipse, rgba(59,130,246,0.14) 0%, transparent 65%);
       pointer-events: none; z-index: 0;
       animation: glow-breathe 6s ease-in-out infinite alternate;
+      will-change: transform;
     }
     @keyframes glow-breathe {
       from { opacity: 0.6; transform: scale(1); }
@@ -296,6 +305,19 @@
     }
     .hero-dot { width: 6px; height: 6px; background: #73a7ff; border-radius: 50%; animation: pulse 2s infinite; }
     @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.7)} }
+    @keyframes countUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideInStagger {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes iconHover {
+      0% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.15) rotate(8deg); }
+      100% { transform: scale(1.2) rotate(0deg); }
+    }
     .hero-title {
       font-size: clamp(2.5rem, 7vw, 4.25rem);
       font-weight: 900; letter-spacing: -.05em; line-height: 1.08;
@@ -518,6 +540,8 @@
       border: 1px solid rgba(138,157,182,0.16);
       background: linear-gradient(180deg, rgba(18,25,34,0.98), rgba(12,18,24,0.98));
       box-shadow: 0 22px 56px rgba(0,0,0,0.32);
+      will-change: transform;
+      transition: transform 0.1s ease-out;
     }
     .workflow-visual {
       position: absolute;
@@ -674,6 +698,19 @@
     .service-card {
       background: var(--white); border: 1px solid var(--border);
       border-radius: var(--radius); padding: 28px;
+      display: flex; flex-direction: column; gap: 12px;
+      transition: border-color .25s, transform .25s, box-shadow .25s, opacity .4s ease, transform .4s ease;
+      opacity: 0;
+      transform: translateY(12px);
+      animation: slideInStagger 0.6s ease-out forwards;
+    }
+    .service-card:nth-child(1) { animation-delay: 0.05s; }
+    .service-card:nth-child(2) { animation-delay: 0.1s; }
+    .service-card:nth-child(3) { animation-delay: 0.15s; }
+    .service-card:nth-child(4) { animation-delay: 0.2s; }
+    .service-card:nth-child(5) { animation-delay: 0.25s; }
+    .service-card:nth-child(6) { animation-delay: 0.3s; }
+      border-radius: var(--radius); padding: 28px;
       transition: border-color .25s, transform .25s, box-shadow .25s;
     }
     .service-card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: var(--shadow-lg); }
@@ -682,6 +719,10 @@
       background: var(--accent-light); border-radius: var(--radius-sm);
       display: flex; align-items: center; justify-content: center;
       color: var(--accent); margin-bottom: 16px;
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .service-card:hover .service-icon {
+      animation: iconHover 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
     }
     .service-title { font-size: 1.125rem; font-weight: 800; color: var(--text-primary); margin-bottom: 12px; letter-spacing: -.02em; line-height: 1.3; }
     .service-desc { font-size: 1rem; color: var(--text-secondary); line-height: 1.75; font-weight: 500; }
@@ -715,6 +756,7 @@
       transition: opacity .15s ease;
     }
     .work-detail.updating { opacity: 0; }
+    .wd-company { font-size: .75rem; font-weight: 700; color: var(--accent-text); background: rgba(124,79,248,0.12); border: 1px solid rgba(124,79,248,0.24); display: inline-flex; padding: 6px 12px; border-radius: 100px; width: fit-content; letter-spacing: .05em; text-transform: uppercase; margin-bottom: 4px; }
     .wd-badge {
       display: inline-flex; align-items: center; gap: 6px;
       background: var(--accent-light); border: 1px solid rgba(124,79,248,0.3);
@@ -722,6 +764,8 @@
       font-size: .75rem; font-weight: 700; color: var(--accent-text); width: fit-content; letter-spacing: .04em; text-transform: uppercase;
     }
     .wd-title { font-size: 1.1875rem; font-weight: 800; color: var(--text-primary); letter-spacing: -.025em; line-height: 1.3; margin-bottom: 4px; }
+    .wd-skills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; margin-top: 8px; }
+    .skill-pill { display: inline-flex; align-items: center; padding: 5px 10px; background: rgba(79,140,255,0.15); border: 1px solid rgba(79,140,255,0.3); border-radius: 12px; font-size: .75rem; font-weight: 600; color: #8eb4ff; letter-spacing: .02em; }
     .wd-desc { font-size: .9375rem; color: var(--text-secondary); line-height: 1.75; font-weight: 500; }
     .wd-features { list-style: none; display: flex; flex-direction: column; gap: 10px; flex: 1; margin-top: 8px; }
     .wd-features li { font-size: .875rem; color: var(--text-secondary); display: flex; align-items: flex-start; gap: 10px; line-height: 1.6; font-weight: 500; }
@@ -1336,6 +1380,8 @@
       line-height: 1.1;
       color: var(--text-primary);
       letter-spacing: -.02em;
+      animation: countUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      opacity: 0;
     }
     .proof-label {
       font-size: 0.8125rem;
@@ -1533,6 +1579,7 @@
           </button>
         </div>
       </div>
+      <div class="navbar-progress" id="scrollProgress" aria-hidden="true"></div>
     </nav>
   </header>
 
@@ -2408,12 +2455,41 @@
 
     // ── Navbar: dark mode over hero, light elsewhere ──
     const navbar = document.getElementById('navbar');
+    const scrollProgress = document.getElementById('scrollProgress');
     const heroSection = document.querySelector('.hero');
+    const heroGlow1 = document.querySelector('.hero-glow-1');
+    const heroGlow2 = document.querySelector('.hero-glow-2');
+    const aboutPhotoCard = document.querySelector('.about-photo-card');
+    
     function updateNavbar() {
       const heroBottom = heroSection ? heroSection.getBoundingClientRect().bottom : 0;
       const scrolled = window.scrollY > 20;
       navbar.classList.toggle('scrolled', scrolled && heroBottom <= 80);
       navbar.classList.toggle('on-dark', heroBottom > 80);
+      
+      // Update scroll progress bar
+      const windowHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercent = (window.scrollY / windowHeight) * 100;
+      scrollProgress.style.width = scrollPercent + '%';
+      
+      // Parallax effect on hero glows
+      if (heroGlow1 && window.scrollY < window.innerHeight) {
+        const offset1 = window.scrollY * 0.5;
+        heroGlow1.style.transform = `translateY(${offset1}px)`;
+      }
+      if (heroGlow2 && window.scrollY < window.innerHeight) {
+        const offset2 = window.scrollY * 0.35;
+        heroGlow2.style.transform = `translateY(${offset2}px)`;
+      }
+      
+      // Parallax effect on about photo
+      if (aboutPhotoCard) {
+        const rect = aboutPhotoCard.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          const offset = (window.innerHeight - rect.top) * 0.1;
+          aboutPhotoCard.style.transform = `translateY(${offset}px)`;
+        }
+      }
     }
     window.addEventListener('scroll', updateNavbar, { passive: true });
     updateNavbar();
@@ -2446,6 +2522,16 @@
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
+          
+          // Trigger count-up animation for proof values
+          const proofValues = entry.target.querySelectorAll('.proof-value');
+          proofValues.forEach(el => {
+            if (!el.classList.contains('counted')) {
+              el.classList.add('counted');
+              el.style.animationDelay = '0.2s';
+            }
+          });
+          
           observer.unobserve(entry.target);
         }
       });
@@ -2463,92 +2549,92 @@
     // ── Coverflow ──
     (function () {
       const PROJECTS = [
-        { cat:'n8n', title:'Lead Gen & Enrichment Pipeline', tag:'Lead Generation', color:'#e84141', hours:18,
+        { cat:'n8n', title:'Lead Gen & Enrichment Pipeline', tag:'Lead Generation', color:'#e84141', hours:18, company:'B2B Companies', skills:['LinkedIn API','Apollo','ICP Scoring','Slack'],
           img:'project-images/n8n-lead-gen-enrichment.png',
           desc:'Automated lead funnel that scrapes prospects, enriches with Apollo & LinkedIn data, scores by ICP fit, and pushes qualified leads directly into your CRM.',
           features:['Multi-source scraping — LinkedIn, Apollo, web','AI-powered ICP scoring with configurable thresholds','CRM auto-push with enriched contact data','Slack instant alerts for high-value leads']
         },
-        { cat:'n8n', title:'TikTok Content Intelligence', tag:'Content Intel', color:'#fe2c55', hours:10,
+        { cat:'n8n', title:'TikTok Content Intelligence', tag:'Content Intel', color:'#fe2c55', hours:10, company:'Content Creators', skills:['TikTok API','Web Scraping','AI Analysis','Slack Reporting'],
           img:'project-images/TikTok Content Intelligence Pipeline.png',
           desc:'Scrapes TikTok competitor data, extracts metadata and transcripts, uses AI to analyze performance patterns, and delivers weekly intelligence reports to Slack.',
           features:['Automated TikTok profile & video scraping','AI transcript extraction and analysis','Competitor performance benchmarking','Weekly Slack intelligence digest']
         },
-        { cat:'n8n', title:'WhatsApp Bot', tag:'Conversational AI', color:'#25d366', hours:16,
+        { cat:'n8n', title:'WhatsApp Bot', tag:'Conversational AI', color:'#25d366', hours:16, company:'E-Commerce Brands', skills:['WhatsApp API','GPT Integration','Customer Service','Message Queue'],
           img:'project-images/Whatsapp bot.jpeg',
           desc:'Conversational WhatsApp automation that routes messages by intent, generates AI responses, and logs all interactions — running 24/7 without manual effort.',
           features:['Multi-intent routing via AI classification','Context-aware GPT-4 response generation','Session memory across conversation threads','Full interaction logging to Google Sheets']
         },
-        { cat:'n8n', title:'Receipt Extractor', tag:'Finance Ops', color:'#ea4335', hours:8,
+        { cat:'n8n', title:'Receipt Extractor', tag:'Finance Ops', color:'#ea4335', hours:8, company:'Accounting Teams', skills:['OCR Technology','PDF Processing','Data Extraction','Google Sheets'],
           img:'project-images/automation receipt extractor.png',
           desc:'Watches Gmail for receipt emails, downloads attachments, runs AI parsing to extract line items, and auto-categorizes expenses into Google Sheets for accounting.',
           features:['Automated Gmail receipt detection & download','AI OCR parsing of PDF and image receipts','Smart expense categorization by vendor/type','Monthly rollup reports to Sheets + Slack']
         },
-        { cat:'n8n', title:'Instagram Automation', tag:'Social Media', color:'#e1306c', hours:12,
+        { cat:'n8n', title:'Instagram Automation', tag:'Social Media', color:'#e1306c', hours:12, company:'Social Media Agencies', skills:['Instagram API','AI Caption Gen','Post Scheduling','Analytics'],
           img:'project-images/instagram workflow.png',
           desc:'End-to-end Instagram content pipeline — generates AI captions, schedules posts at optimal times, and tracks performance data automatically.',
           features:['AI caption generation from content briefs','Optimal-time scheduling via engagement analytics','Hashtag strategy and auto-tagging','Performance tracking dashboard in Sheets']
         },
-        { cat:'n8n', title:'TikTok & Instagram Scraper', tag:'Data Pipeline', color:'#fe2c55', hours:10,
+        { cat:'n8n', title:'TikTok & Instagram Scraper', tag:'Data Pipeline', color:'#fe2c55', hours:10, company:'Data Analytics', skills:['Platform APIs','Parallel Processing','Delta Updates','Dashboards'],
           img:'project-images/TIktok and instagram scraper.png',
           desc:'Dual-platform scraper that pulls profile stats, video data, and engagement metrics from TikTok and Instagram simultaneously into a unified analytics sheet.',
           features:['Simultaneous TikTok & Instagram extraction','Parallel processing with Merge node sync','Duplicate detection and delta-only updates','Unified multi-platform analytics dashboard']
         },
-        { cat:'n8n', title:'Retell AI Voice Agent', tag:'Voice AI', color:'#6c3de8', hours:25,
+        { cat:'n8n', title:'Retell AI Voice Agent', tag:'Voice AI', color:'#6c3de8', hours:25, company:'Call Centers', skills:['Retell AI','Voice Processing','CRM Integration','Transcription'],
           img:'project-images/retell ai updated.png',
           desc:'Inbound voice agent powered by Retell AI — answers calls, qualifies leads through natural conversation, logs outcomes to CRM, and triggers follow-up sequences automatically.',
           features:['Natural language call handling via Retell AI','Real-time lead qualification during calls','Automatic CRM logging with call transcripts','Post-call follow-up email/SMS sequences']
         },
-        { cat:'n8n', title:'AI Market Research', tag:'Research AI', color:'#1fb8cd', hours:16,
+        { cat:'n8n', title:'AI Market Research', tag:'Research AI', color:'#1fb8cd', hours:16, company:'Multiple Clients', skills:['Perplexity AI','Web Scraping','Data Synthesis','Slack API'],
           img:'project-images/AI Market Research Automation System.jpeg',
           desc:'Automated research pipeline that queries multiple data sources, runs competitive analysis via Perplexity AI, synthesizes findings, and delivers structured reports to Slack.',
           features:['Multi-source web research with Perplexity AI','Competitor analysis and trend detection','Structured report generation with key insights','Automated delivery to Slack + Notion archive']
         },
-        { cat:'n8n', title:'Lead Generation System', tag:'Lead Generation', color:'#e05c35', hours:15,
+        { cat:'n8n', title:'Lead Generation System', tag:'Lead Generation', color:'#e05c35', hours:15, company:'SaaS Startup', skills:['Apollo API','Apify','Data Enrichment','ICP Scoring'],
           img:'project-images/Lead Gen using Apify.png',
           desc:'Full-stack lead gen that pulls targeted prospects from Apollo/Apify, enriches with firmographic data, scores by ICP fit, and auto-enrolls qualified leads in outbound sequences.',
           features:['Apollo/Apify prospect sourcing with filters','Multi-step data enrichment pipeline','ICP fit scoring with tiered thresholds','Auto-enrollment in outbound sequences']
         },
-        { cat:'n8n', title:'Metadata Automation', tag:'File Management', color:'#2d7ff9', hours:9,
+        { cat:'n8n', title:'Metadata Automation', tag:'File Management', color:'#2d7ff9', hours:9, company:'Digital Agency', skills:['File Processing','AI Tagging','Google Sheets','Airtable'],
           img:'project-images/metadata.png',
           desc:'Extracts and organizes metadata from digital files and media assets — enabling faster retrieval, AI-driven tagging, and eliminating all manual categorization work.',
           features:['Automated metadata extraction from files/media','AI-driven tagging based on file content & type','Centralized Google Sheets / Airtable database','Batch processing + duplicate file detection']
         },
-        { cat:'n8n', title:'Lead Outreach Automation', tag:'Sales Outreach', color:'#0078d4', hours:20,
+        { cat:'n8n', title:'Lead Outreach Automation', tag:'Sales Outreach', color:'#0078d4', hours:20, company:'E-Commerce Firm', skills:['GPT-4 API','Email Integration','CRM API','Reply Detection'],
           img:'project-images/Lead Outreach.png',
           desc:'Identifies qualified prospects, sends AI-personalized outreach, follows up at optimal intervals, tracks replies, and logs all activity into your CRM automatically.',
           features:['AI-personalized cold email generation via GPT-4','Automated follow-up scheduling at set intervals','Reply detection that stops sequences automatically','Real-time CRM activity logging for all touchpoints']
         },
-        { cat:'zapier', title:'Intelligent Media Transcription & Blog Generation', tag:'Content Pipeline', color:'#ff4a00', hours:10,
+        { cat:'zapier', title:'Intelligent Media Transcription & Blog Generation', tag:'Content Pipeline', color:'#ff4a00', hours:10, company:'Marketing Agency', skills:['AI Transcription','SEO Optimization','Multi-Channel Publishing','Zapier'],
           img:'project-images/project-transcription.png',
           desc:'End-to-end content pipeline that converts short-form video into SEO-optimized blog posts and social captions with automated multi-channel publishing.',
           features:['Zero manual intervention for content repurposing across platforms', 'Automated video-to-text transcription using AI by Zapier', 'Multi-channel routing to Facebook and LinkedIn via Zapier Paths', 'Dynamic content looping and automated email distribution']
         },
-        { cat:'zapier', title:'High-Intent Lead Identification & Engagement Stack', tag:'Lead Engagement', color:'#ff4a00', hours:12,
+        { cat:'zapier', title:'High-Intent Lead Identification & Engagement Stack', tag:'Lead Engagement', color:'#ff4a00', hours:12, company:'Consulting Group', skills:['Webhooks','AI Personalization','Slack API','Lead Scoring'],
           img:'project-images/project-lead.png',
           desc:'Custom webhook-based lead ingestion with dual-path logic to categorize and autonomously engage high-priority leads using AI by Zapier personalized emails.',
           features:['Reduced manual lead screening time by 80%', 'Custom webhook ingestion with dynamic text formatting', 'Dual-path conditional routing for High vs. Low priority leads', 'Automated AI email drafting and instant Slack team notifications']
         },
-        { cat:'zapier', title:'AI Content Repurposing Pipeline', tag:'Social Automation', color:'#ff4a00', hours:14,
+        { cat:'zapier', title:'AI Content Repurposing Pipeline', tag:'Social Automation', color:'#ff4a00', hours:14, company:'Content Creator Network', skills:['Google Drive API','AI Content Gen','LinkedIn API','Data Looping'],
           img:'project-images/Ai-content-repurposing.png',
           desc:'Fully automated content engine that watches Google Drive for new files, extracts content via AI, generates long-form blog posts, and loops through the outputs to publish tailored updates across multiple LinkedIn channels.',
           features:['Google Drive trigger for seamless file ingestion', 'AI-powered URL extraction and blog post generation', 'Advanced data looping to process multiple content pieces simultaneously', 'Conditional routing to publish customized LinkedIn updates']
         },
-        { cat:'zapier', title:'Apollo Lead Router & Account Setup', tag:'Sales Ops', color:'#ff4a00', hours:8,
+        { cat:'zapier', title:'Apollo Lead Router & Account Setup', tag:'Sales Ops', color:'#ff4a00', hours:8, company:'Tech Startup', skills:['Apollo.io API','Webhooks','Data Standardization','Lead Segmentation'],
           img:'project-images/apollo-lead-router.png',
           desc:'An automated lead ingestion system that catches incoming webhook data, formats it, creates corresponding accounts in Apollo.io, and conditionally routes leads into prioritized databases based on their value.',
           features:['Custom Webhook ingestion for flexible, real-time lead capture', 'Automated text formatting and data standardization', 'Direct integration with Apollo.io for zero-touch account creation', 'Conditional routing to instantly segment high-priority vs. standard leads']
         },
-        { cat:'zapier', title:'Asana Lead CRM & Action Automation', tag:'CRM Automation', color:'#ff4a00', hours:18,
+        { cat:'zapier', title:'Asana Lead CRM & Action Automation', tag:'CRM Automation', color:'#ff4a00', hours:18, company:'Professional Services', skills:['Asana API','Google Drive','Email Automation','Conditional Logic'],
           img:'project-images/lead-action-automation-crm.png',
           desc:'A complex, multi-path CRM automation triggered by Asana task updates. It dynamically handles lead statuses—creating client folders, dispatching targeted follow-up emails, and routing post-sale onboarding based on specific service tiers.',
           features:['Asana task-based trigger for real-time pipeline management', '5-way conditional routing for distinct lead lifecycle stages', 'Automated Google Drive client folder and subtask generation', 'Nested conditional logic to dispatch service-specific post-sale emails']
         },
-        { cat:'make', title:'Xero to Asana Financial Sync', tag:'Finance Ops', color:'#5e00d1', hours:12,
+        { cat:'make', title:'Xero to Asana Financial Sync', tag:'Finance Ops', color:'#5e00d1', hours:12, company:'Accounting Firm', skills:['Xero API','Asana API','CSV Generation','Data Sync'],
           img:'project-images/xero-asana-export.png',
           desc:'Automates financial reporting by watching for completed Asana tasks, pulling account transactions via Xero API, compiling a formatted CSV report, and attaching it back to the project management workflow.',
           features:['Asana task-triggered financial data extraction', 'Custom Xero API integration for transaction retrieval', 'Automated CSV generation using Google Sheets', 'Self-cleaning architecture that resets databases after runs']
         },
-        { cat:'make', title:'AI Lead Qualification & CRM Auto-Pipeline', tag:'Lead Scoring', color:'#5e00d1', hours:15,
+        { cat:'make', title:'AI Lead Qualification & CRM Auto-Pipeline', tag:'Lead Scoring', color:'#5e00d1', hours:15, company:'B2B SaaS', skills:['OpenAI API','Real-time Routing','CRM Integration','Slack API'],
           img:'project-images/project-lead-qualification.png',
           desc:'AI-powered lead qualification system that scores and routes inbound leads in real time, updates CRM automatically, and instantly alerts teams for high-priority opportunities via Slack and email.',
           features:['Real-time lead scoring and routing with zero manual CRM updates', 'Multi-step AI analysis using OpenAI to determine lead priority', 'Automated data routing based on custom scoring thresholds', 'Instant team alerts via Slack and Gmail for high-value leads']
@@ -2587,8 +2673,10 @@
         if (activeProjects.length === 0) return; // Safety net for empty categories
         const p = activeProjects[idx];
         detail.innerHTML =
+          '<div class="wd-company">' + p.company + '</div>' +
           '<div class="wd-badge"><span style="color:' + p.color + ';margin-right:4px;">●</span>' + p.tag + '</div>' +
           '<div class="wd-title">' + p.title + '</div>' +
+          '<div class="wd-skills">' + p.skills.map(s => '<span class="skill-pill">' + s + '</span>').join('') + '</div>' +
           '<div class="wd-desc">' + p.desc + '</div>' +
           '<ul class="wd-features">' + p.features.map(f => '<li>' + f + '</li>').join('') + '</ul>' +
           '<div class="wd-footer">' +
