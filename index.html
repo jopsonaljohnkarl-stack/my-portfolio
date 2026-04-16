@@ -59,7 +59,7 @@
     ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-track { background: #05050f; }
     ::-webkit-scrollbar-thumb { background: rgba(108,61,232,0.4); border-radius: 2px; }
-    ::selection { background: rgba(124,79,248,0.45); color: #d4c5ff; }
+    ::-selection { background: rgba(124,79,248,0.45); color: #d4c5ff; }
 
     /* ── Layout ─── */
     .container { width: 100%; max-width: 1140px; margin: 0 auto; padding: 0 24px; }
@@ -1043,13 +1043,11 @@
   </style>
 </head>
 <body>
-  <!-- Custom cursor -->
   <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
   <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
 
   <a href="#main" class="skip-link">Skip to content</a>
 
-  <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Navigation">
     <button class="mobile-close" id="mobileClose" aria-label="Close menu">
       <i data-lucide="x" width="24" height="24"></i>
@@ -1062,7 +1060,6 @@
     <a href="#contact" onclick="closeMobileMenu()" class="btn-primary" style="margin-top:8px;">Book a Free Call</a>
   </div>
 
-  <!-- Navbar -->
   <header role="banner">
     <nav class="navbar" id="navbar" aria-label="Primary">
       <div class="container">
@@ -1096,7 +1093,6 @@
 
   <main id="main">
 
-    <!-- ── Hero ── -->
     <section class="hero" aria-label="Introduction">
       <canvas id="heroCanvas" aria-hidden="true"></canvas>
       <div class="hero-glow-1" aria-hidden="true"></div>
@@ -1147,7 +1143,6 @@
               </div>
             </div>
           </div>
-          <!-- Avatar -->
           <div class="hero-avatar-wrap" aria-label="John Jopson profile">
             <div class="hero-avatar">
               <div class="hero-avatar-inner">
@@ -1175,17 +1170,14 @@
       </div>
     </section>
 
-    <!-- ── Tools ── -->
     <section class="section tools-section" id="tools" aria-label="Tools and platforms">
       <div class="container" style="max-width:100%; padding:0;">
         <p class="tools-label" style="padding:0 24px;">Tools &amp; Platforms I Work With</p>
       </div>
-      <!-- Marquee rows — full bleed, fade edges -->
       <div style="position:relative;">
         <div style="position:absolute;top:0;left:0;width:80px;height:100%;background:linear-gradient(90deg,var(--bg),transparent);z-index:2;pointer-events:none;"></div>
         <div style="position:absolute;top:0;right:0;width:80px;height:100%;background:linear-gradient(-90deg,var(--bg),transparent);z-index:2;pointer-events:none;"></div>
         <div class="marquee-wrapper" aria-hidden="true">
-          <!-- Row 1 -->
           <div class="marquee-track row-1">
             <div class="tool-item"><div class="tool-logo" style="background:#e84141;"><img src="https://cdn.simpleicons.org/n8n/ffffff" alt="n8n" onerror="this.style.display='none'"></div><span class="tool-name">n8n</span></div>
             <div class="tool-item"><div class="tool-logo" style="background:#7c3aed;"><img src="https://cdn.simpleicons.org/make/ffffff" alt="Make" onerror="this.style.display='none'"></div><span class="tool-name">Make</span></div>
@@ -1199,7 +1191,6 @@
             <div class="tool-item"><div class="tool-logo" style="background:#2d7ff9;"><img src="https://cdn.simpleicons.org/airtable/ffffff" alt="Airtable" onerror="this.style.display='none'"></div><span class="tool-name">Airtable</span></div>
             <div class="tool-item"><div class="tool-logo" style="background:#306998;"><img src="https://cdn.simpleicons.org/python/ffffff" alt="Python" onerror="this.style.display='none'"></div><span class="tool-name">Python</span></div>
             <div class="tool-item"><div class="tool-logo" style="background:#3c873a;"><img src="https://cdn.simpleicons.org/nodedotjs/ffffff" alt="Node.js" onerror="this.style.display='none'"></div><span class="tool-name">Node.js</span></div>
-            <!-- duplicate for loop -->
             <div class="tool-item"><div class="tool-logo" style="background:#e84141;"><img src="https://cdn.simpleicons.org/n8n/ffffff" alt="n8n" onerror="this.style.display='none'"></div><span class="tool-name">n8n</span></div>
             <div class="tool-item"><div class="tool-logo" style="background:#7c3aed;"><img src="https://cdn.simpleicons.org/make/ffffff" alt="Make" onerror="this.style.display='none'"></div><span class="tool-name">Make</span></div>
             <div class="tool-item"><div class="tool-logo" style="background:#ff4a00;"><img src="https://cdn.simpleicons.org/zapier/ffffff" alt="Zapier" onerror="this.style.display='none'"></div><span class="tool-name">Zapier</span></div>
@@ -1213,7 +1204,6 @@
             <div class="tool-item"><div class="tool-logo" style="background:#306998;"><img src="https://cdn.simpleicons.org/python/ffffff" alt="Python" onerror="this.style.display='none'"></div><span class="tool-name">Python</span></div>
             <div class="tool-item"><div class="tool-logo" style="background:#3c873a;"><img src="https://cdn.simpleicons.org/nodedotjs/ffffff" alt="Node.js" onerror="this.style.display='none'"></div><span class="tool-name">Node.js</span></div>
           </div>
-          <!-- Row 2 -->
           <div class="marquee-track row-2">
             <div class="tool-item"><div class="tool-logo" style="background:#2ca01c;"><img src="https://cdn.simpleicons.org/intuit/ffffff" alt="QuickBooks" onerror="this.style.display='none'"></div><span class="tool-name">QuickBooks</span></div>
             <div class="tool-item"><div class="tool-logo" style="background:#13b5ea;"><img src="https://cdn.simpleicons.org/xero/ffffff" alt="Xero" onerror="this.style.display='none'"></div><span class="tool-name">Xero</span></div>
@@ -1237,7 +1227,6 @@
             <div class="tool-item"><div class="tool-logo" style="background:#5b4cf5;font-size:.42rem;">VAPI</div><span class="tool-name">Vapi.ai</span></div>
             <div class="tool-item"><div class="tool-logo" style="background:#21759b;"><img src="https://cdn.simpleicons.org/wordpress/ffffff" alt="WordPress" onerror="this.style.display='none'"></div><span class="tool-name">WordPress</span></div>
             <div class="tool-item"><div class="tool-logo" style="background:#2d8cff;"><img src="https://cdn.simpleicons.org/zoom/ffffff" alt="Zoom" onerror="this.style.display='none'"></div><span class="tool-name">Zoom</span></div>
-            <!-- duplicate for loop -->
             <div class="tool-item"><div class="tool-logo" style="background:#2ca01c;"><img src="https://cdn.simpleicons.org/intuit/ffffff" alt="QuickBooks" onerror="this.style.display='none'"></div><span class="tool-name">QuickBooks</span></div>
             <div class="tool-item"><div class="tool-logo" style="background:#13b5ea;"><img src="https://cdn.simpleicons.org/xero/ffffff" alt="Xero" onerror="this.style.display='none'"></div><span class="tool-name">Xero</span></div>
             <div class="tool-item"><div class="tool-logo" style="background:#0057ff;">AW</div><span class="tool-name">Airwallex</span></div>
@@ -1265,12 +1254,10 @@
       </div>
     </section>
 
-    <!-- ── About + Services (combined) ── -->
     <section class="section about-services-section" id="about" aria-label="About me and services">
       <div class="container">
         <div class="as-grid">
 
-          <!-- Left: B&W photo card with text overlay -->
           <div class="about-photo-card reveal" aria-label="John Jopson photo">
             <img src="project-images/profile.jpg" alt="John Jopson — AI & Automation Specialist" />
             <div class="about-photo-overlay" aria-hidden="true"></div>
@@ -1317,7 +1304,6 @@
             </div>
           </div>
 
-          <!-- Right: Services -->
           <div class="services-col reveal reveal-delay-1" id="services">
             <div class="services-col-header">
               <div class="section-chip" style="margin-bottom:14px;">Services</div>
@@ -1362,7 +1348,6 @@
       </div>
     </section>
 
-    <!-- ── Work ── -->
     <section class="section work-section" id="work" aria-label="Portfolio work">
       <div class="container">
         <div style="margin-bottom:48px;">
@@ -1372,12 +1357,12 @@
         </div>
 
         <div class="work-tabs reveal reveal-delay-1" role="tablist" aria-label="Filter by category">
-          <<button class="work-tab-btn active" data-cat="all" role="tab" aria-selected="true">All Projects</button>
-  <button class="work-tab-btn" data-cat="n8n" role="tab" aria-selected="false">n8n Workflows</button>
-  <button class="work-tab-btn" data-cat="zapier" role="tab" aria-selected="false">Zapier</button>
-  <button class="work-tab-btn" data-cat="make" role="tab" aria-selected="false">Make</button>
-  <button class="work-tab-btn" data-cat="gohighlevel" role="tab" aria-selected="false">GoHighLevel</button>
-</div>
+          <button class="work-tab-btn active" data-cat="all" role="tab" aria-selected="true">All Projects</button>
+          <button class="work-tab-btn" data-cat="n8n" role="tab" aria-selected="false">n8n Workflows</button>
+          <button class="work-tab-btn" data-cat="zapier" role="tab" aria-selected="false">Zapier</button>
+          <button class="work-tab-btn" data-cat="make" role="tab" aria-selected="false">Make</button>
+          <button class="work-tab-btn" data-cat="gohighlevel" role="tab" aria-selected="false">GoHighLevel</button>
+        </div>
 
         <div class="work-showcase reveal reveal-delay-2">
           <div class="work-detail" id="workDetail" aria-live="polite" aria-label="Project details"></div>
@@ -1398,7 +1383,6 @@
       </div>
     </section>
 
-    <!-- ── Process ── -->
     <section class="section process-section" id="process" aria-label="How I work">
       <div class="container">
         <div class="process-header">
@@ -1441,7 +1425,6 @@
       </div>
     </section>
 
-    <!-- ── Contact ── -->
     <section class="section contact-section" id="contact" aria-label="Contact">
       <div class="container">
         <div class="contact-header">
@@ -1497,7 +1480,6 @@
 
   </main>
 
-  <!-- Chatbot Widget -->
   <button class="cb-bubble" id="cbBubble" aria-label="Open chat" aria-expanded="false">
     <span class="cb-bubble-icon-open" aria-hidden="true">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
@@ -1526,7 +1508,6 @@
     </div>
   </div>
 
-  <!-- Project Modal -->
   <div class="proj-modal-overlay" id="projModalOverlay" role="dialog" aria-modal="true" aria-labelledby="projModalTitle">
     <div class="proj-modal">
       <div class="proj-modal-header">
@@ -1543,7 +1524,6 @@
     </div>
   </div>
 
-  <!-- Footer -->
   <footer role="contentinfo">
     <div class="container">
       <div class="footer-inner">
@@ -1855,20 +1835,20 @@
           features:['AI-personalized cold email generation via GPT-4','Automated follow-up scheduling at set intervals','Reply detection that stops sequences automatically','Real-time CRM activity logging for all touchpoints']
         },
         { cat:'zapier', title:'Zapier Automation', tag:'API Integration', color:'#ff4a00', hours:5,
-    img:'project-images/social-preview.jpg',
-    desc:'This is a placeholder for your future Zapier project. You can edit this text later!',
-    features:['Custom Webhooks', 'Automated data routing', 'Multi-step Zaps']
-  },
-  { cat:'make', title:'Make.com Scenario', tag:'Workflow Ops', color:'#5e00d1', hours:8,
-    img:'project-images/social-preview.jpg',
-    desc:'This is a placeholder for your future Make project. You can edit this text later!',
-    features:['Advanced data parsing', 'Error handling routines', 'Scenario optimization']
-  },
-  { cat:'gohighlevel', title:'GHL Snapshot', tag:'CRM Setup', color:'#00a8ec', hours:10,
-    img:'project-images/social-preview.jpg',
-    desc:'This is a placeholder for your future GoHighLevel project. You can edit this text later!',
-    features:['Automated SMS follow-ups', 'Pipeline stage triggers', 'Calendar booking bot']
-  }
+          img:'project-images/social-preview.jpg',
+          desc:'This is a placeholder for your future Zapier project. You can edit this text later!',
+          features:['Custom Webhooks', 'Automated data routing', 'Multi-step Zaps']
+        },
+        { cat:'make', title:'Make.com Scenario', tag:'Workflow Ops', color:'#5e00d1', hours:8,
+          img:'project-images/social-preview.jpg',
+          desc:'This is a placeholder for your future Make project. You can edit this text later!',
+          features:['Advanced data parsing', 'Error handling routines', 'Scenario optimization']
+        },
+        { cat:'gohighlevel', title:'GHL Snapshot', tag:'CRM Setup', color:'#00a8ec', hours:10,
+          img:'project-images/social-preview.jpg',
+          desc:'This is a placeholder for your future GoHighLevel project. You can edit this text later!',
+          features:['Automated SMS follow-ups', 'Pipeline stage triggers', 'Calendar booking bot']
+        }
       ];
 
       let current = 0;
@@ -1885,84 +1865,92 @@
       }
 
       // Create a flexible list that changes when we filter
-let activeProjects = PROJECTS;
+      let activeProjects = PROJECTS;
 
-function getPos(i) {
-  const n = activeProjects.length;
-  let d = ((i - current) % n + n) % n;
-  if (d > n / 2) d -= n;
-  if (d ===  0) return 'active';
-  if (d === -1) return 'prev';
-  if (d ===  1) return 'next';
-  if (d === -2) return 'far-prev';
-  if (d ===  2) return 'far-next';
-  return 'hidden';
-}
+      function getPos(i) {
+        const n = activeProjects.length;
+        let d = ((i - current) % n + n) % n;
+        if (d > n / 2) d -= n;
+        if (d ===  0) return 'active';
+        if (d === -1) return 'prev';
+        if (d ===  1) return 'next';
+        if (d === -2) return 'far-prev';
+        if (d ===  2) return 'far-next';
+        return 'hidden';
+      }
 
-function renderDetail(idx) {
-  if (activeProjects.length === 0) return; // Safety net for empty categories
-  const p = activeProjects[idx];
-  detail.innerHTML =
-    '<div class="wd-badge"><span style="color:' + p.color + ';margin-right:4px;">●</span>' + p.tag + '</div>' +
-    '<div class="wd-title">' + p.title + '</div>' +
-    '<div class="wd-desc">' + p.desc + '</div>' +
-    '<ul class="wd-features">' + p.features.map(f => '<li>' + f + '</li>').join('') + '</ul>' +
-    '<div class="wd-footer">' +
-      '<div class="wd-hours"><strong>' + p.hours + '</strong> hrs/week saved</div>' +
-      '<div class="wd-counter">' + (idx + 1) + ' / ' + activeProjects.length + '</div>' +
-    '</div>';
-}
-
-function goTo(idx) {
-  if (activeProjects.length === 0) return; // Safety net
-  current = ((idx % activeProjects.length) + activeProjects.length) % activeProjects.length;
-  cards.forEach((c, i) => c.setAttribute('data-pos', getPos(i)));
-  dotsWrap.querySelectorAll('.cf-dot').forEach((d, i) => d.classList.toggle('active', i === current));
-  detail.classList.add('updating');
-  setTimeout(function () {
-    renderDetail(current);
-    detail.classList.remove('updating');
-  }, 160);
-}
-
-      // Build cards
-      PROJECTS.forEach(function (p, i) {
-        const card = document.createElement('div');
-        card.className = 'cf-card';
-        card.setAttribute('data-pos', 'hidden');
-        card.setAttribute('role', 'button');
-        card.setAttribute('tabindex', '0');
-        card.setAttribute('aria-label', p.title);
-        card.innerHTML =
-          '<div class="cf-card-header">' +
-            '<div class="cf-card-dot" style="background:' + p.color + '"></div>' +
-            '<div class="cf-card-dot" style="background:rgba(255,255,255,0.15)"></div>' +
-            '<div class="cf-card-dot" style="background:rgba(255,255,255,0.08)"></div>' +
-            '<div class="cf-card-titlebar">' + p.title + '</div>' +
-          '</div>' +
-          buildImg(p.img, p.title) +
-          '<div class="cf-card-footer">' +
-            '<div class="cf-tag">' + p.tag + '</div>' +
-            '<div class="cf-hours">&#9201; ' + p.hours + 'h/wk saved</div>' +
+      function renderDetail(idx) {
+        if (activeProjects.length === 0) return; // Safety net for empty categories
+        const p = activeProjects[idx];
+        detail.innerHTML =
+          '<div class="wd-badge"><span style="color:' + p.color + ';margin-right:4px;">●</span>' + p.tag + '</div>' +
+          '<div class="wd-title">' + p.title + '</div>' +
+          '<div class="wd-desc">' + p.desc + '</div>' +
+          '<ul class="wd-features">' + p.features.map(f => '<li>' + f + '</li>').join('') + '</ul>' +
+          '<div class="wd-footer">' +
+            '<div class="wd-hours"><strong>' + p.hours + '</strong> hrs/week saved</div>' +
+            '<div class="wd-counter">' + (idx + 1) + ' / ' + activeProjects.length + '</div>' +
           '</div>';
-        card.addEventListener('click', (function (idx) {
-          return function () { if (card.getAttribute('data-pos') !== 'active') goTo(idx); };
-        })(i));
-        card.addEventListener('keydown', (function (idx) {
-          return function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goTo(idx); } };
-        })(i));
-        stage.appendChild(card);
-        cards.push(card);
-      });
+      }
 
-      // Build dots
-      PROJECTS.forEach(function (_, i) {
-        const dot = document.createElement('button');
-        dot.className = 'cf-dot';
-        dot.setAttribute('aria-label', 'Go to project ' + (i + 1));
-        dot.addEventListener('click', (function (idx) { return function () { goTo(idx); }; })(i));
-        dotsWrap.appendChild(dot);
-      });
+      function goTo(idx) {
+        if (activeProjects.length === 0) return; // Safety net
+        current = ((idx % activeProjects.length) + activeProjects.length) % activeProjects.length;
+        cards.forEach((c, i) => c.setAttribute('data-pos', getPos(i)));
+        dotsWrap.querySelectorAll('.cf-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+        detail.classList.add('updating');
+        setTimeout(function () {
+          renderDetail(current);
+          detail.classList.remove('updating');
+        }, 160);
+      }
+
+      // The Rebuild Function
+      function buildCarousel() {
+        stage.innerHTML = '';    // Clear old cards
+        dotsWrap.innerHTML = ''; // Clear old dots
+        cards = [];              // Empty the list
+
+        activeProjects.forEach(function (p, i) {
+          const card = document.createElement('div');
+          card.className = 'cf-card';
+          card.setAttribute('data-pos', 'hidden');
+          card.setAttribute('role', 'button');
+          card.setAttribute('tabindex', '0');
+          card.setAttribute('aria-label', p.title);
+          card.innerHTML =
+            '<div class="cf-card-header">' +
+              '<div class="cf-card-dot" style="background:' + p.color + '"></div>' +
+              '<div class="cf-card-dot" style="background:rgba(255,255,255,0.15)"></div>' +
+              '<div class="cf-card-dot" style="background:rgba(255,255,255,0.08)"></div>' +
+              '<div class="cf-card-titlebar">' + p.title + '</div>' +
+            '</div>' +
+            buildImg(p.img, p.title) +
+            '<div class="cf-card-footer">' +
+              '<div class="cf-tag">' + p.tag + '</div>' +
+              '<div class="cf-hours">&#9201; ' + p.hours + 'h/wk saved</div>' +
+            '</div>';
+          card.addEventListener('click', (function (idx) {
+            return function () { if (card.getAttribute('data-pos') !== 'active') goTo(idx); };
+          })(i));
+          card.addEventListener('keydown', (function (idx) {
+            return function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); goTo(idx); } };
+          })(i));
+          stage.appendChild(card);
+          cards.push(card);
+        });
+
+        // Build dots
+        activeProjects.forEach(function (_, i) {
+          const dot = document.createElement('button');
+          dot.className = 'cf-dot';
+          dot.setAttribute('aria-label', 'Go to project ' + (i + 1));
+          dot.addEventListener('click', (function (idx) { return function () { goTo(idx); }; })(i));
+          dotsWrap.appendChild(dot);
+        });
+      } // End of buildCarousel function
+
+      buildCarousel(); // Run it once when the page first opens
 
       // Nav buttons
       btnPrev.addEventListener('click', function () { goTo(current - 1); });
@@ -1992,16 +1980,27 @@ function goTo(idx) {
 
       goTo(0);
 
-      // ── Tab filtering (All / n8n) ──
+      // ── Real Tab Filtering ──
       document.querySelectorAll('.work-tab-btn').forEach(function(btn) {
         btn.addEventListener('click', function() {
+          // 1. Change the button colors
           document.querySelectorAll('.work-tab-btn').forEach(function(b) {
             b.classList.remove('active');
             b.setAttribute('aria-selected', 'false');
           });
           btn.classList.add('active');
           btn.setAttribute('aria-selected', 'true');
-          // All projects and n8n both show same set for now — visual feedback only
+
+          // 2. Filter the database based on the clicked button
+          let selectedCat = btn.getAttribute('data-cat');
+          if (selectedCat === 'all') {
+            activeProjects = PROJECTS; // Show everything
+          } else {
+            activeProjects = PROJECTS.filter(p => p.cat === selectedCat); // Filter the list
+          }
+
+          // 3. Rebuild the visual cards and reset the slider to the front
+          buildCarousel();
           goTo(0);
         });
       });
@@ -2015,7 +2014,7 @@ function goTo(idx) {
       var mClose   = document.getElementById('projModalClose');
 
       function openModal(idx) {
-        var p = PROJECTS[idx];
+        var p = activeProjects[idx];
         mTitle.textContent = p.title;
         mTag.textContent   = p.tag;
         mHours.innerHTML   = '<strong>' + p.hours + '</strong> hrs/week saved';
