@@ -1372,9 +1372,12 @@
         </div>
 
         <div class="work-tabs reveal reveal-delay-1" role="tablist" aria-label="Filter by category">
-          <button class="work-tab-btn active" data-cat="all" role="tab" aria-selected="true">All Projects</button>
-          <button class="work-tab-btn" data-cat="n8n" role="tab" aria-selected="false">n8n Workflows</button>
-        </div>
+          <<button class="work-tab-btn active" data-cat="all" role="tab" aria-selected="true">All Projects</button>
+  <button class="work-tab-btn" data-cat="n8n" role="tab" aria-selected="false">n8n Workflows</button>
+  <button class="work-tab-btn" data-cat="zapier" role="tab" aria-selected="false">Zapier</button>
+  <button class="work-tab-btn" data-cat="make" role="tab" aria-selected="false">Make</button>
+  <button class="work-tab-btn" data-cat="gohighlevel" role="tab" aria-selected="false">GoHighLevel</button>
+</div>
 
         <div class="work-showcase reveal reveal-delay-2">
           <div class="work-detail" id="workDetail" aria-live="polite" aria-label="Project details"></div>
@@ -1850,7 +1853,22 @@
           img:'project-images/Lead Outreach.png',
           desc:'Identifies qualified prospects, sends AI-personalized outreach, follows up at optimal intervals, tracks replies, and logs all activity into your CRM automatically.',
           features:['AI-personalized cold email generation via GPT-4','Automated follow-up scheduling at set intervals','Reply detection that stops sequences automatically','Real-time CRM activity logging for all touchpoints']
-        }
+        },
+        { cat:'zapier', title:'Zapier Automation', tag:'API Integration', color:'#ff4a00', hours:5,
+    img:'project-images/social-preview.jpg',
+    desc:'This is a placeholder for your future Zapier project. You can edit this text later!',
+    features:['Custom Webhooks', 'Automated data routing', 'Multi-step Zaps']
+  },
+  { cat:'make', title:'Make.com Scenario', tag:'Workflow Ops', color:'#5e00d1', hours:8,
+    img:'project-images/social-preview.jpg',
+    desc:'This is a placeholder for your future Make project. You can edit this text later!',
+    features:['Advanced data parsing', 'Error handling routines', 'Scenario optimization']
+  },
+  { cat:'gohighlevel', title:'GHL Snapshot', tag:'CRM Setup', color:'#00a8ec', hours:10,
+    img:'project-images/social-preview.jpg',
+    desc:'This is a placeholder for your future GoHighLevel project. You can edit this text later!',
+    features:['Automated SMS follow-ups', 'Pipeline stage triggers', 'Calendar booking bot']
+  }
       ];
 
       let current = 0;
@@ -1866,41 +1884,46 @@
         return '<img class="cf-card-img" src="' + src + '" alt="' + alt + '" loading="lazy" />';
       }
 
-      function getPos(i) {
-        const n = PROJECTS.length;
-        let d = ((i - current) % n + n) % n;
-        if (d > n / 2) d -= n;
-        if (d ===  0) return 'active';
-        if (d === -1) return 'prev';
-        if (d ===  1) return 'next';
-        if (d === -2) return 'far-prev';
-        if (d ===  2) return 'far-next';
-        return 'hidden';
-      }
+      // Create a flexible list that changes when we filter
+let activeProjects = PROJECTS;
 
-      function renderDetail(idx) {
-        const p = PROJECTS[idx];
-        detail.innerHTML =
-          '<div class="wd-badge"><span style="color:' + p.color + ';margin-right:4px;">●</span>' + p.tag + '</div>' +
-          '<div class="wd-title">' + p.title + '</div>' +
-          '<div class="wd-desc">' + p.desc + '</div>' +
-          '<ul class="wd-features">' + p.features.map(f => '<li>' + f + '</li>').join('') + '</ul>' +
-          '<div class="wd-footer">' +
-            '<div class="wd-hours"><strong>' + p.hours + '</strong> hrs/week saved</div>' +
-            '<div class="wd-counter">' + (idx + 1) + ' / ' + PROJECTS.length + '</div>' +
-          '</div>';
-      }
+function getPos(i) {
+  const n = activeProjects.length;
+  let d = ((i - current) % n + n) % n;
+  if (d > n / 2) d -= n;
+  if (d ===  0) return 'active';
+  if (d === -1) return 'prev';
+  if (d ===  1) return 'next';
+  if (d === -2) return 'far-prev';
+  if (d ===  2) return 'far-next';
+  return 'hidden';
+}
 
-      function goTo(idx) {
-        current = ((idx % PROJECTS.length) + PROJECTS.length) % PROJECTS.length;
-        cards.forEach((c, i) => c.setAttribute('data-pos', getPos(i)));
-        dotsWrap.querySelectorAll('.cf-dot').forEach((d, i) => d.classList.toggle('active', i === current));
-        detail.classList.add('updating');
-        setTimeout(function () {
-          renderDetail(current);
-          detail.classList.remove('updating');
-        }, 160);
-      }
+function renderDetail(idx) {
+  if (activeProjects.length === 0) return; // Safety net for empty categories
+  const p = activeProjects[idx];
+  detail.innerHTML =
+    '<div class="wd-badge"><span style="color:' + p.color + ';margin-right:4px;">●</span>' + p.tag + '</div>' +
+    '<div class="wd-title">' + p.title + '</div>' +
+    '<div class="wd-desc">' + p.desc + '</div>' +
+    '<ul class="wd-features">' + p.features.map(f => '<li>' + f + '</li>').join('') + '</ul>' +
+    '<div class="wd-footer">' +
+      '<div class="wd-hours"><strong>' + p.hours + '</strong> hrs/week saved</div>' +
+      '<div class="wd-counter">' + (idx + 1) + ' / ' + activeProjects.length + '</div>' +
+    '</div>';
+}
+
+function goTo(idx) {
+  if (activeProjects.length === 0) return; // Safety net
+  current = ((idx % activeProjects.length) + activeProjects.length) % activeProjects.length;
+  cards.forEach((c, i) => c.setAttribute('data-pos', getPos(i)));
+  dotsWrap.querySelectorAll('.cf-dot').forEach((d, i) => d.classList.toggle('active', i === current));
+  detail.classList.add('updating');
+  setTimeout(function () {
+    renderDetail(current);
+    detail.classList.remove('updating');
+  }, 160);
+}
 
       // Build cards
       PROJECTS.forEach(function (p, i) {
