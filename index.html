@@ -343,7 +343,7 @@
     }
     .hero-stats {
       display: flex; flex-wrap: wrap; gap: 48px;
-      padding-top: 48px; border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 40px; margin-top: 8px; border-top: 1px solid rgba(255,255,255,0.08);
     }
     .hero-stat-val {
       font-size: 1.875rem; font-weight: 900; letter-spacing: -.04em;
@@ -422,72 +422,42 @@
     .navbar.on-dark .nav-links a:hover { color: #fff; }
     .navbar.on-dark .nav-menu-btn { color: #fff; }
 
-    /* ── Custom Cursor ─── */
+    /* ── Custom Cursor: Crystalline Physics-Based ─── */
     @media (pointer: fine) {
       * { cursor: none !important; }
     }
-    .cursor-dot {
+    .cursor-core {
       position: fixed; top: 0; left: 0; z-index: 99999;
-      width: 8px; height: 8px;
-      background: var(--accent);
-      border-radius: 50%;
+      width: 24px; height: 24px;
       pointer-events: none;
-      transform: translate(-50%, -50%);
-      transition: width .15s, height .15s, background .15s, opacity .2s;
       will-change: transform;
+      filter: drop-shadow(0 0 8px rgba(79,140,255,0.4));
     }
-    .cursor-ring {
+    .cursor-crystal {
+      width: 100%; height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+    }
+    .cursor-crystal svg {
+      width: 100%; height: 100%;
+      filter: drop-shadow(0 0 4px rgba(79,140,255,0.6));
+    }
+    .cursor-fragment {
       position: fixed; top: 0; left: 0; z-index: 99998;
-      width: 36px; height: 36px;
-      border: 1.5px solid var(--accent);
-      border-radius: 50%;
       pointer-events: none;
-      transform: translate(-50%, -50%);
-      transition: width .25s ease, height .25s ease, border-color .25s, opacity .3s, border-radius .3s ease;
-      will-change: transform;
-      opacity: 0.6;
-    }
-    .cursor-dot.hovering { width: 12px; height: 12px; background: var(--accent-hover); }
-    .cursor-ring.hovering { width: 52px; height: 52px; opacity: 0.35; border-color: var(--accent-hover); }
-    .cursor-ring.triangle.hovering {
-      background: var(--accent-hover);
-      opacity: 0.35;
-    }
-    .cursor-dot.clicking { width: 6px; height: 6px; }
-    .cursor-ring.clicking { width: 28px; height: 28px; opacity: 0.8; }
-    .cursor-ripple {
-      position: fixed; top: 0; left: 0; z-index: 99997;
-      width: 20px; height: 20px;
-      border: 1px solid var(--accent);
-      border-radius: 50%;
-      pointer-events: none;
-      transform: translate(-50%, -50%) scale(0);
-      opacity: 0;
-      transition: none;
-    }
-    .cursor-ripple.hover {
-      border-color: var(--accent-hover);
+      will-change: transform, opacity;
     }
     .cursor-trail {
-      position: fixed; top: 0; left: 0; z-index: 99996;
-      width: 3px; height: 3px;
-      background: var(--accent);
-      border-radius: 50%;
+      position: fixed; top: 0; left: 0; z-index: 99997;
       pointer-events: none;
-      transform: translate(-50%, -50%);
+      will-change: transform, opacity;
       opacity: 0;
     }
-    .cursor-particle {
-      position: fixed; top: 0; left: 0; z-index: 99995;
-      width: 4px; height: 4px;
-      background: var(--accent);
-      border-radius: 50%;
-      pointer-events: none;
-      transform: translate(-50%, -50%);
-      opacity: 0;
+    .cursor-core.hovering {
+      filter: drop-shadow(0 0 16px rgba(79,140,255,0.8)) drop-shadow(0 0 4px rgba(124,79,248,0.4));
     }
     @media (pointer: coarse) {
-      .cursor-dot, .cursor-ring, .cursor-ripple, .cursor-trail, .cursor-particle { display: none; }
+      .cursor-core, .cursor-fragment, .cursor-trail { display: none; }
     }
 
     /* ── Tools Marquee ─── */
@@ -699,20 +669,19 @@
       background: var(--white); border: 1px solid var(--border);
       border-radius: var(--radius); padding: 28px;
       display: flex; flex-direction: column; gap: 12px;
-      transition: border-color .25s, transform .25s, box-shadow .25s, opacity .4s ease, transform .4s ease;
+      transition: border-color .25s, transform .25s, box-shadow .25s;
       opacity: 0;
       transform: translateY(12px);
+    }
+    .service-card.animate {
       animation: slideInStagger 0.6s ease-out forwards;
     }
-    .service-card:nth-child(1) { animation-delay: 0.05s; }
-    .service-card:nth-child(2) { animation-delay: 0.1s; }
-    .service-card:nth-child(3) { animation-delay: 0.15s; }
-    .service-card:nth-child(4) { animation-delay: 0.2s; }
-    .service-card:nth-child(5) { animation-delay: 0.25s; }
-    .service-card:nth-child(6) { animation-delay: 0.3s; }
-      border-radius: var(--radius); padding: 28px;
-      transition: border-color .25s, transform .25s, box-shadow .25s;
-    }
+    .service-card.animate:nth-child(1) { animation-delay: 0.05s; }
+    .service-card.animate:nth-child(2) { animation-delay: 0.1s; }
+    .service-card.animate:nth-child(3) { animation-delay: 0.15s; }
+    .service-card.animate:nth-child(4) { animation-delay: 0.2s; }
+    .service-card.animate:nth-child(5) { animation-delay: 0.25s; }
+    .service-card.animate:nth-child(6) { animation-delay: 0.3s; }
     .service-card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: var(--shadow-lg); }
     .service-icon {
       width: 44px; height: 44px;
@@ -1380,8 +1349,9 @@
       line-height: 1.1;
       color: var(--text-primary);
       letter-spacing: -.02em;
-      animation: countUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
       opacity: 0;
+      transform: translateY(8px);
+      animation: fadeInUp 0.8s ease 0.2s forwards;
     }
     .proof-label {
       font-size: 0.8125rem;
@@ -1532,8 +1502,9 @@
       </div>
     </div>
   </div>
-  <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
-  <div class="cursor-ring" id="cursorRing" aria-hidden="true"></div>
+  <div class="cursor-core" id="cursorCore" aria-hidden="true">
+    <div class="cursor-crystal" id="cursorCrystal"></div>
+  </div>
 
   <a href="#main" class="skip-link">Skip to content</a>
 
@@ -1664,7 +1635,7 @@
 
     <section class="section tools-section" id="tools" aria-label="Tools and platforms">
       <div class="container" style="max-width:100%; padding:0;">
-        <p class="tools-label" style="padding:0 24px;">Tools &amp; Platforms I Work With</p>
+        <p class="tools-label" style="padding:0 24px; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em;">Tools &amp; Platforms I Work With</p>
       </div>
       <div style="position:relative;">
         <div style="position:absolute;top:0;left:0;width:80px;height:100%;background:linear-gradient(90deg,var(--bg),transparent);z-index:2;pointer-events:none;"></div>
@@ -2012,7 +1983,7 @@
       <div class="container">
         <div class="contact-header">
           <div class="section-chip reveal" style="margin: 0 auto 16px;">Contact</div>
-          <h2 class="section-title reveal reveal-delay-1">Need a Workflow That<br />Saves Time?</h2>
+          <h2 class="section-title reveal reveal-delay-1">Need a System That<br />Saves Time?</h2>
           <p class="section-desc reveal reveal-delay-2" style="margin: 14px auto 0;">
             If part of your business still depends on manual updates, copy-paste work, or tool switching, I can help turn it into a cleaner system.
           </p>
@@ -2149,154 +2120,192 @@
       else { img.addEventListener('load', function() { fb.style.display = 'none'; }); }
     })();
 
-    // ── Custom Cursor ──
+    // ── Crystalline Physics-Based Cursor ──
     (function() {
-      const dot  = document.getElementById('cursorDot');
-      const ring = document.getElementById('cursorRing');
-      if (!dot || !ring) return;
+      const core = document.getElementById('cursorCore');
+      const crystal = document.getElementById('cursorCrystal');
+      if (!core || !crystal) return;
+      
       // Only on pointer:fine devices
       if (!window.matchMedia('(pointer: fine)').matches) {
-        dot.style.display = 'none'; ring.style.display = 'none'; return;
+        core.style.display = 'none';
+        return;
       }
 
-      let rx = 0, ry = 0; // ring position (lagged)
-      let mx = 0, my = 0; // mouse position
-      let raf;
-      let ripples = []; // array of active ripples
-      let trailPoints = []; // array of trail points for glow effect
-      let particles = []; // array of burst particles
+      // Create crystalline SVG shape
+      const crystallineSVG = `
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g transform="translate(12, 12)">
+            <!-- Outer crystal frame -->
+            <polygon points="0,-10 8.66,-5 5,-8.66 10,0 5,8.66 8.66,5 0,10 -8.66,5 -5,8.66 -10,0 -5,-8.66 -8.66,-5" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.8"/>
+            <!-- Inner crystal structure -->
+            <polygon points="0,-6 5.2,-3 3,-5.2 6,0 3,5.2 5.2,3 0,6 -5.2,3 -3,5.2 -6,0 -3,-5.2 -5.2,-3" fill="none" stroke="currentColor" stroke-width="1" opacity="0.6"/>
+            <!-- Core point -->
+            <circle cx="0" cy="0" r="2" fill="currentColor" opacity="0.9"/>
+            <!-- Reflection highlight -->
+            <line x1="-3" y1="-3" x2="2" y2="2" stroke="currentColor" stroke-width="0.8" opacity="0.4"/>
+          </g>
+        </svg>
+      `;
+      crystal.innerHTML = crystallineSVG;
+      crystal.style.color = 'var(--accent)';
+
+      let mx = 0, my = 0; // current mouse position
+      let cx = 0, cy = 0; // cursor position
+      let vx = 0, vy = 0; // velocity
+      let ax = 0, ay = 0; // acceleration
+      let rotation = 0; // rotation angle
       let isHovering = false;
-      let lastRippleTime = 0;
-      let lastParticleTime = 0;
+      let lastFragmentTime = 0;
+      let raf;
 
-      // Create trail elements
-      for (let i = 0; i < 20; i++) {
-        const trailEl = document.createElement('div');
-        trailEl.className = `cursor-trail cursor-trail-${i}`;
-        document.body.appendChild(trailEl);
-      }
+      const friction = 0.97; // Physics friction (less friction = faster response)
+      const acceleration = 0.35; // How quickly cursor accelerates to mouse
+      const maxVelocity = 16; // Max speed
+
+      // Initialize cursor position
+      cx = window.innerWidth / 2;
+      cy = window.innerHeight / 2;
+      core.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
 
       document.addEventListener('mousemove', e => {
-        mx = e.clientX; my = e.clientY;
-        dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
+        mx = e.clientX;
+        my = e.clientY;
         
-        // Add trail point for glow effect
-        trailPoints.push({ x: mx, y: my, age: 0 });
-        if (trailPoints.length > 20) trailPoints.shift(); // Keep only recent points
-        
-        if (!raf) raf = requestAnimationFrame(animateRing);
+        if (!raf) raf = requestAnimationFrame(animate);
       });
 
-      function animateRing() {
-        rx += (mx - rx) * 0.12;
-        ry += (my - ry) * 0.12;
-        ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
-        // Update trail points for glow effect
-        trailPoints.forEach((point, index) => {
-          point.age++;
-          const opacity = Math.max(0, (20 - point.age) / 20) * 0.3;
-          const trailEl = document.querySelector(`.cursor-trail-${index}`);
-          if (trailEl) {
-            trailEl.style.transform = `translate(${point.x}px, ${point.y}px) translate(-50%, -50%)`;
-            trailEl.style.opacity = opacity;
-          }
-        });
+      function animate() {
+        // Calculate direction to mouse
+        const dx = mx - cx;
+        const dy = my - cy;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        // Physics-based movement with acceleration
+        if (distance > 0.5) {
+          ax = (dx / distance) * acceleration;
+          ay = (dy / distance) * acceleration;
+        } else {
+          ax *= friction;
+          ay *= friction;
+        }
+
+        // Update velocity with friction
+        vx += ax;
+        vy += ay;
         
-        // Update ripples
+        // Apply friction and cap max velocity
+        vx *= friction;
+        vy *= friction;
+        
+        const speed = Math.sqrt(vx * vx + vy * vy);
+        if (speed > maxVelocity) {
+          vx = (vx / speed) * maxVelocity;
+          vy = (vy / speed) * maxVelocity;
+        }
+
+        // Update cursor position
+        cx += vx;
+        cy += vy;
+
+        // Calculate rotation based on velocity direction
+        rotation += speed * 2;
+
+        // Update core position and rotation
+        core.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%) rotate(${rotation}deg)`;
+
+        // Create fragments when moving fast and hovering
         const currentTime = Date.now();
-        ripples.forEach((ripple, index) => {
-          ripple.age = currentTime - ripple.startTime;
-          const progress = ripple.age / ripple.duration;
-          
-          if (progress >= 1) {
-            // Remove completed ripple
-            ripple.el.remove();
-            ripples.splice(index, 1);
-          } else {
-            // Update ripple size and opacity
-            const scale = progress * ripple.maxScale;
-            const opacity = (1 - progress) * 0.6;
-            ripple.el.style.transform = `translate(${ripple.x}px, ${ripple.y}px) translate(-50%, -50%) scale(${scale})`;
-            ripple.el.style.opacity = opacity;
-          }
-        });
-        
-        // Update particles
-        particles.forEach((particle, index) => {
-          particle.age = currentTime - particle.startTime;
-          const progress = particle.age / particle.duration;
-          
-          if (progress >= 1) {
-            particle.el.remove();
-            particles.splice(index, 1);
-          } else {
-            // Update particle position based on velocity
-            particle.x += particle.vx;
-            particle.y += particle.vy;
-            particle.vx *= 0.98; // friction
-            particle.vy *= 0.98;
-            
-            const opacity = (1 - progress) * 0.8;
-            particle.el.style.transform = `translate(${particle.x}px, ${particle.y}px) translate(-50%, -50%)`;
-            particle.el.style.opacity = opacity;
-          }
-        });
-        
-        // Create new ripples and particles when hovering
-        if (isHovering) {
-          if (currentTime - lastRippleTime > 300) { // Ripples every 300ms
-            createRipple(rx, ry);
-            lastRippleTime = currentTime;
-          }
-          if (currentTime - lastParticleTime > 150) { // Particles every 150ms
-            createParticleBurst(rx, ry);
-            lastParticleTime = currentTime;
-          }
+        if (isHovering && speed > 1.5 && currentTime - lastFragmentTime > 100) {
+          createFragment(cx, cy, vx, vy);
+          lastFragmentTime = currentTime;
         }
-        
-        raf = requestAnimationFrame(animateRing);
+
+        // Create trail
+        if (speed > 0.5) {
+          createTrail(cx, cy, vx, vy);
+        }
+
+        raf = requestAnimationFrame(animate);
       }
 
-      function createRipple(x, y) {
-        const rippleEl = document.createElement('div');
-        rippleEl.className = 'cursor-ripple';
-        document.body.appendChild(rippleEl);
+      function createFragment(x, y, vx, vy) {
+        const fragment = document.createElement('div');
+        fragment.className = 'cursor-fragment';
+        fragment.style.color = 'var(--accent)';
         
-        const ripple = {
-          el: rippleEl,
-          x: x,
-          y: y,
-          startTime: Date.now(),
-          duration: 1000, // 1000ms animation
-          maxScale: 4
-        };
-        
-        ripples.push(ripple);
+        const fragmentSVG = `
+          <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" width="8" height="8">
+            <polygon points="6,0 10,6 6,10 2,6" fill="currentColor" opacity="0.7"/>
+            <circle cx="6" cy="6" r="1.5" fill="currentColor" opacity="0.4"/>
+          </svg>
+        `;
+        fragment.innerHTML = fragmentSVG;
+        document.body.appendChild(fragment);
+
+        const angle = Math.atan2(vy, vx) + (Math.random() - 0.5) * Math.PI * 0.5;
+        const speed = Math.sqrt(vx * vx + vy * vy) * (0.5 + Math.random() * 0.5);
+        const fvx = Math.cos(angle) * speed;
+        const fvy = Math.sin(angle) * speed;
+        const startTime = Date.now();
+        const duration = 800;
+
+        function updateFragment() {
+          const elapsed = Date.now() - startTime;
+          const progress = elapsed / duration;
+
+          if (progress >= 1) {
+            fragment.remove();
+            return;
+          }
+
+          // Physics for fragment
+          const fx = x + fvx * elapsed * 0.2 - (elapsed * elapsed) * 0.0002;
+          const fy = y + fvy * elapsed * 0.2 + (elapsed * elapsed) * 0.0001;
+          const opacity = (1 - progress) * 0.6;
+          const scale = 1 - progress * 0.5;
+          const rot = progress * 360;
+
+          fragment.style.transform = `translate(${fx}px, ${fy}px) translate(-50%, -50%) rotate(${rot}deg) scale(${scale})`;
+          fragment.style.opacity = opacity;
+
+          requestAnimationFrame(updateFragment);
+        }
+
+        updateFragment();
       }
 
-      function createParticleBurst(x, y) {
-        const particleCount = 6; // 6 particles per burst
-        
-        for (let i = 0; i < particleCount; i++) {
-          const particleEl = document.createElement('div');
-          particleEl.className = 'cursor-particle';
-          document.body.appendChild(particleEl);
-          
-          const angle = (i / particleCount) * Math.PI * 2;
-          const speed = 2 + Math.random() * 3;
-          
-          const particle = {
-            el: particleEl,
-            x: x,
-            y: y,
-            vx: Math.cos(angle) * speed,
-            vy: Math.sin(angle) * speed,
-            startTime: Date.now(),
-            duration: 600 + Math.random() * 400 // 600-1000ms
-          };
-          
-          particles.push(particle);
+      function createTrail(x, y, vx, vy) {
+        const trail = document.createElement('div');
+        trail.className = 'cursor-trail';
+        trail.style.width = '3px';
+        trail.style.height = '3px';
+        trail.style.borderRadius = '50%';
+        trail.style.background = 'var(--accent)';
+        trail.style.boxShadow = '0 0 4px rgba(79,140,255,0.6)';
+        document.body.appendChild(trail);
+
+        const startTime = Date.now();
+        const duration = 400;
+
+        function updateTrail() {
+          const elapsed = Date.now() - startTime;
+          const progress = elapsed / duration;
+
+          if (progress >= 1) {
+            trail.remove();
+            return;
+          }
+
+          const opacity = (1 - progress) * 0.4;
+          const scale = 1 - progress * 0.6;
+          trail.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) scale(${scale})`;
+          trail.style.opacity = opacity;
+
+          requestAnimationFrame(updateTrail);
         }
+
+        updateTrail();
       }
 
       // Hover state on interactive elements
@@ -2304,31 +2313,22 @@
       document.addEventListener('mouseover', e => {
         if (e.target.closest(interactables)) {
           isHovering = true;
-          dot.classList.add('hovering'); ring.classList.add('hovering');
+          core.classList.add('hovering');
         }
       });
       document.addEventListener('mouseout', e => {
         if (e.target.closest(interactables)) {
           isHovering = false;
-          dot.classList.remove('hovering'); ring.classList.remove('hovering');
+          core.classList.remove('hovering');
         }
       });
-      document.addEventListener('mousedown', () => { dot.classList.add('clicking'); ring.classList.add('clicking'); });
-      document.addEventListener('mouseup',   () => { dot.classList.remove('clicking'); ring.classList.remove('clicking'); });
 
       // Hide when leaving window
       document.addEventListener('mouseleave', () => { 
-        dot.style.opacity='0'; ring.style.opacity='0'; 
-        ripples.forEach(r => r.el.remove());
-        particles.forEach(p => p.el.remove());
-        trailPoints.forEach((_, i) => {
-          const trailEl = document.querySelector(`.cursor-trail-${i}`);
-          if (trailEl) trailEl.style.opacity = '0';
-        });
-        ripples = []; particles = []; trailPoints = [];
+        core.style.opacity = '0'; 
       });
       document.addEventListener('mouseenter', () => { 
-        dot.style.opacity='1'; ring.style.opacity='0.6'; 
+        core.style.opacity = '1'; 
       });
     })();
 
@@ -2516,27 +2516,75 @@
       if (e.key === 'Escape' && mobileMenu.classList.contains('open')) closeMobileMenu();
     });
 
-    // Scroll reveal
+    // Scroll reveal with animation triggers
     const reveals = document.querySelectorAll('.reveal');
+    const observerOptions = { threshold: [0, 0.05, 0.1, 0.15, 0.2] };
+    
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
           
-          // Trigger count-up animation for proof values
-          const proofValues = entry.target.querySelectorAll('.proof-value');
-          proofValues.forEach(el => {
-            if (!el.classList.contains('counted')) {
-              el.classList.add('counted');
-              el.style.animationDelay = '0.2s';
-            }
+          // Trigger count-up animation for proof values inside this reveal
+          entry.target.querySelectorAll('.proof-value').forEach(el => {
+            el.classList.add('animate');
+          });
+          
+          // Trigger staggered animation for service cards inside this reveal
+          entry.target.querySelectorAll('.service-card').forEach(el => {
+            el.classList.add('animate');
           });
           
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+    }, observerOptions);
+    
     reveals.forEach(el => observer.observe(el));
+    
+    // Counter animation for proof values
+    const animateCounter = (el, target, duration = 2000) => {
+      let current = 0;
+      const start = Date.now();
+      
+      const updateCounter = () => {
+        const elapsed = Date.now() - start;
+        const progress = Math.min(elapsed / duration, 1);
+        current = target * progress;
+        el.textContent = current.toFixed(1);
+        
+        if (progress < 1) {
+          requestAnimationFrame(updateCounter);
+        } else {
+          el.textContent = target.toFixed(1);
+        }
+      };
+      
+      requestAnimationFrame(updateCounter);
+    };
+    
+    // Direct observer for proof values - just add the animate class for fade in
+    const proofObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.classList.contains('animate')) {
+          entry.target.classList.add('animate');
+          proofObserver.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+    
+    document.querySelectorAll('.proof-value').forEach(el => proofObserver.observe(el));
+    
+    // Direct observer for service cards not wrapped in .reveal
+    const cardObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.classList.contains('animate')) {
+          entry.target.classList.add('animate');
+        }
+      });
+    }, observerOptions);
+    
+    document.querySelectorAll('.service-card').forEach(el => cardObserver.observe(el));
 
     // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(link => {
