@@ -130,7 +130,7 @@ lucide.createIcons();
   const canvas = document.getElementById('heroCanvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
-  let W, H, particles, mouse = { x: -999, y: -999 };
+  let W, H, particles, rafId, mouse = { x: -999, y: -999 };
   const COUNT = 90, CONNECT_DIST = 140, MOUSE_DIST = 120, SPEED = 0.35;
 
   function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
@@ -141,13 +141,12 @@ lucide.createIcons();
     return { x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - 0.5) * SPEED, vy: (Math.random() - 0.5) * SPEED, r: Math.random() * 1.8 + 0.8, hue, alpha: Math.random() * 0.5 + 0.3 };
   }
 
-  function draw() {
+  function drawFrame() {
     ctx.clearRect(0, 0, W, H);
     ctx.strokeStyle = 'rgba(108,61,232,0.04)'; ctx.lineWidth = 1;
     const gSize = 48;
     for (let x = 0; x < W; x += gSize) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
     for (let y = 0; y < H; y += gSize) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
-
     for (let i = 0; i < particles.length; i++) {
       const p = particles[i];
       const dx = p.x - mouse.x, dy = p.y - mouse.y;
@@ -177,7 +176,7 @@ lucide.createIcons();
         }
       }
     }
-    requestAnimationFrame(draw);
+    rafId = requestAnimationFrame(drawFrame);
   }
 
   const hero = canvas.closest('.hero');
@@ -190,7 +189,12 @@ lucide.createIcons();
 
   resize();
   particles = Array.from({ length: COUNT }, mkParticle);
-  draw();
+  rafId = requestAnimationFrame(drawFrame);
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) cancelAnimationFrame(rafId);
+    else rafId = requestAnimationFrame(drawFrame);
+  });
 })();
 
 // ── Navbar ──
@@ -452,7 +456,7 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   if (!loader) return;
   var progressBar = loader.querySelector('.page-loader-bar');
   var progressText = loader.querySelector('.page-loader-status span:last-child');
-  var duration = 3000, startTime = Date.now();
+  var duration = 1500, startTime = Date.now();
 
   function updateProgress() {
     var elapsed = Date.now() - startTime;
@@ -473,5 +477,60 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
       document.body.classList.remove('page-loading');
       setTimeout(function() { if (loader.parentNode) loader.parentNode.removeChild(loader); }, 450);
     }, Math.max(0, duration - elapsed));
+  });
+})();
+
+// ── Footer year ──
+(function() {
+  var el = document.getElementById('footerYear');
+  if (el) el.textContent = new Date().getFullYear();
+})();
+
+// ── Mobile menu focus trap ──
+(function() {
+  var menu = document.getElementById('mobileMenu');
+  var btn  = document.getElementById('menuBtn');
+  if (!menu) return;
+  var FOCUSABLE = 'a[href], button:not([disabled]), input, textarea, select, [tabindex]:not([tabindex="-1"])';
+
+  document.addEventListener('keydown', function(e) {
+    if (!menu.classList.contains('open') || e.key !== 'Tab') return;
+    var focusable = Array.prototype.slice.call(menu.querySelectorAll(FOCUSABLE)).filter(function(el) {
+      return !el.closest('[hidden]') && el.offsetParent !== null;
+    });
+    if (!focusable.length) { e.preventDefault(); return; }
+    var first = focusable[0], last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault(); last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault(); first.focus();
+    }
+  });
+})();
+
+// ── Contact form ──
+(function() {
+  var form    = document.getElementById('contactForm');
+  var success = document.getElementById('cfSuccess');
+  if (!form || !success) return;
+  var submitBtn = form.querySelector('.cf-submit');
+
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var name    = document.getElementById('cfName').value.trim();
+    var email   = document.getElementById('cfEmail').value.trim();
+    var message = document.getElementById('cfMessage').value.trim();
+    if (!name || !email || !message) return;
+
+    var subject = encodeURIComponent('Portfolio Inquiry from ' + name);
+    var body    = encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\nMessage:\n' + message);
+    window.location.href = 'mailto:jopsonaljohnkarl@gmail.com?subject=' + subject + '&body=' + body;
+
+    success.classList.add('show');
+    form.reset();
+    setTimeout(function() { success.classList.remove('show'); }, 6000);
+
+    // Re-init Lucide icons after form reset re-renders the submit button
+    if (typeof lucide !== 'undefined') lucide.createIcons();
   });
 })();
