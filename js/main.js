@@ -16,113 +16,39 @@ lucide.createIcons();
   else { img.addEventListener('load', function() { fb.style.display = 'none'; }); }
 })();
 
-// ── Crystalline Physics-Based Cursor ──
-(function() {
-  const core = document.getElementById('cursorCore');
-  const crystal = document.getElementById('cursorCrystal');
-  if (!core || !crystal) return;
+// ── CTA Magnetism ──
+(function () {
+  var supportsFinePointer = window.matchMedia('(pointer: fine)').matches;
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!supportsFinePointer || prefersReducedMotion) return;
 
-  if (!window.matchMedia('(pointer: fine)').matches) {
-    core.style.display = 'none';
-    return;
-  }
+  var magneticSelector = [
+    '.btn-primary',
+    '.hero-actions .btn-outline',
+    '.contact-cta-wrap .btn-primary'
+  ].join(',');
 
-  const crystallineSVG = `
-    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g transform="translate(12, 12)">
-        <polygon points="0,-10 8.66,-5 5,-8.66 10,0 5,8.66 8.66,5 0,10 -8.66,5 -5,8.66 -10,0 -5,-8.66 -8.66,-5" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.8"/>
-        <polygon points="0,-6 5.2,-3 3,-5.2 6,0 3,5.2 5.2,3 0,6 -5.2,3 -3,5.2 -6,0 -3,-5.2 -5.2,-3" fill="none" stroke="currentColor" stroke-width="1" opacity="0.6"/>
-        <circle cx="0" cy="0" r="2" fill="currentColor" opacity="0.9"/>
-        <line x1="-3" y1="-3" x2="2" y2="2" stroke="currentColor" stroke-width="0.8" opacity="0.4"/>
-      </g>
-    </svg>
-  `;
-  crystal.innerHTML = crystallineSVG;
-  crystal.style.color = 'var(--accent)';
+  var elements = Array.prototype.slice.call(document.querySelectorAll(magneticSelector));
+  if (!elements.length) return;
 
-  let mx = 0, my = 0, cx = 0, cy = 0, vx = 0, vy = 0, ax = 0, ay = 0;
-  let rotation = 0, isHovering = false, lastFragmentTime = 0, raf;
-  const friction = 0.97, acceleration = 0.35, maxVelocity = 16;
+  elements.forEach(function (element) {
+    var reset = function () {
+      element.style.transform = '';
+    };
 
-  cx = window.innerWidth / 2;
-  cy = window.innerHeight / 2;
-  core.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%)`;
+    element.addEventListener('mousemove', function (event) {
+      var rect = element.getBoundingClientRect();
+      var offsetX = event.clientX - rect.left - rect.width / 2;
+      var offsetY = event.clientY - rect.top - rect.height / 2;
+      var moveX = Math.max(-8, Math.min(8, offsetX * 0.12));
+      var moveY = Math.max(-6, Math.min(6, offsetY * 0.12));
 
-  document.addEventListener('mousemove', e => {
-    mx = e.clientX; my = e.clientY;
-    if (!raf) raf = requestAnimationFrame(animate);
+      element.style.transform = 'translate(' + moveX.toFixed(2) + 'px, ' + moveY.toFixed(2) + 'px)';
+    });
+
+    element.addEventListener('mouseleave', reset);
+    element.addEventListener('blur', reset);
   });
-
-  function animate() {
-    const dx = mx - cx, dy = my - cy;
-    const distance = Math.sqrt(dx * dx + dy * dy);
-    if (distance > 0.5) {
-      ax = (dx / distance) * acceleration;
-      ay = (dy / distance) * acceleration;
-    } else {
-      ax *= friction; ay *= friction;
-    }
-    vx = (vx + ax) * friction;
-    vy = (vy + ay) * friction;
-    const speed = Math.sqrt(vx * vx + vy * vy);
-    if (speed > maxVelocity) { vx = (vx / speed) * maxVelocity; vy = (vy / speed) * maxVelocity; }
-    cx += vx; cy += vy;
-    rotation += speed * 2;
-    core.style.transform = `translate(${cx}px, ${cy}px) translate(-50%, -50%) rotate(${rotation}deg)`;
-    const currentTime = Date.now();
-    if (isHovering && speed > 1.5 && currentTime - lastFragmentTime > 100) {
-      createFragment(cx, cy, vx, vy);
-      lastFragmentTime = currentTime;
-    }
-    if (speed > 0.5) createTrail(cx, cy, vx, vy);
-    raf = requestAnimationFrame(animate);
-  }
-
-  function createFragment(x, y, vx, vy) {
-    const fragment = document.createElement('div');
-    fragment.className = 'cursor-fragment';
-    fragment.style.color = 'var(--accent)';
-    fragment.innerHTML = `<svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" width="8" height="8"><polygon points="6,0 10,6 6,10 2,6" fill="currentColor" opacity="0.7"/><circle cx="6" cy="6" r="1.5" fill="currentColor" opacity="0.4"/></svg>`;
-    document.body.appendChild(fragment);
-    const angle = Math.atan2(vy, vx) + (Math.random() - 0.5) * Math.PI * 0.5;
-    const spd = Math.sqrt(vx * vx + vy * vy) * (0.5 + Math.random() * 0.5);
-    const fvx = Math.cos(angle) * spd, fvy = Math.sin(angle) * spd;
-    const startTime = Date.now(), duration = 800;
-    (function updateFragment() {
-      const elapsed = Date.now() - startTime, progress = elapsed / duration;
-      if (progress >= 1) { fragment.remove(); return; }
-      const fx = x + fvx * elapsed * 0.2 - elapsed * elapsed * 0.0002;
-      const fy = y + fvy * elapsed * 0.2 + elapsed * elapsed * 0.0001;
-      fragment.style.transform = `translate(${fx}px, ${fy}px) translate(-50%, -50%) rotate(${progress * 360}deg) scale(${1 - progress * 0.5})`;
-      fragment.style.opacity = (1 - progress) * 0.6;
-      requestAnimationFrame(updateFragment);
-    })();
-  }
-
-  function createTrail(x, y) {
-    const trail = document.createElement('div');
-    trail.className = 'cursor-trail';
-    trail.style.cssText = 'width:3px;height:3px;border-radius:50%;background:var(--accent);box-shadow:0 0 4px rgba(79,140,255,0.6);';
-    document.body.appendChild(trail);
-    const startTime = Date.now(), duration = 400;
-    (function updateTrail() {
-      const elapsed = Date.now() - startTime, progress = elapsed / duration;
-      if (progress >= 1) { trail.remove(); return; }
-      trail.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) scale(${1 - progress * 0.6})`;
-      trail.style.opacity = (1 - progress) * 0.4;
-      requestAnimationFrame(updateTrail);
-    })();
-  }
-
-  const interactables = 'a, button, [role="button"], input, textarea, select, label, .tool-item, .service-card, .cf-card, .contact-card';
-  document.addEventListener('mouseover', e => {
-    if (e.target.closest(interactables)) { isHovering = true; core.classList.add('hovering'); }
-  });
-  document.addEventListener('mouseout', e => {
-    if (e.target.closest(interactables)) { isHovering = false; core.classList.remove('hovering'); }
-  });
-  document.addEventListener('mouseleave', () => { core.style.opacity = '0'; });
-  document.addEventListener('mouseenter', () => { core.style.opacity = '1'; });
 })();
 
 // ── Particle Network Canvas ──
@@ -374,81 +300,6 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
   observer.observe(stepsEl);
 })();
 
-// ── Ring Cursor ──
-(function() {
-  var ring = document.createElement('div'); ring.className = 'c-ring';
-  var dot  = document.createElement('div'); dot.className  = 'c-dot';
-  document.body.appendChild(ring);
-  document.body.appendChild(dot);
-
-  var TRAIL = 9, trail = [];
-  for (var i = 0; i < TRAIL; i++) {
-    var t = document.createElement('div'); t.className = 'c-trail';
-    var sz = Math.round(6 - i * 0.5);
-    t.style.cssText = 'width:' + sz + 'px;height:' + sz + 'px;opacity:' + (0.55 - i * 0.055).toFixed(2) + ';';
-    document.body.appendChild(t);
-    trail.push({ el: t, x: -200, y: -200 });
-  }
-
-  var mx = -200, my = -200, rx = -200, ry = -200;
-
-  document.addEventListener('mousemove', function(e) {
-    mx = e.clientX; my = e.clientY;
-    dot.style.left = mx + 'px'; dot.style.top = my + 'px';
-  });
-
-  (function tick() {
-    rx += (mx - rx) * 0.14; ry += (my - ry) * 0.14;
-    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-    trail[0].x += (mx - trail[0].x) * 0.45; trail[0].y += (my - trail[0].y) * 0.45;
-    trail[0].el.style.left = trail[0].x + 'px'; trail[0].el.style.top = trail[0].y + 'px';
-    for (var i = 1; i < TRAIL; i++) {
-      trail[i].x += (trail[i-1].x - trail[i].x) * 0.38;
-      trail[i].y += (trail[i-1].y - trail[i].y) * 0.38;
-      trail[i].el.style.left = trail[i].x + 'px'; trail[i].el.style.top = trail[i].y + 'px';
-    }
-    requestAnimationFrame(tick);
-  })();
-
-  var BURST_COLORS = ['#7c4ff8','#a78bfa','#c4b5fd','#e879f9','#fff','#818cf8'];
-  document.addEventListener('click', function(e) {
-    ring.style.width = '52px'; ring.style.height = '52px';
-    ring.style.borderColor = 'rgba(167,139,250,1)';
-    setTimeout(function() {
-      ring.style.width = '30px'; ring.style.height = '30px';
-      ring.style.borderColor = 'rgba(124,79,248,0.75)';
-    }, 220);
-    for (var i = 0; i < 12; i++) {
-      (function(idx) {
-        var p = document.createElement('div'); p.className = 'c-burst';
-        var sz = 3 + Math.random() * 5;
-        var ang = (idx / 12) * Math.PI * 2 + (Math.random() - 0.5) * 0.6;
-        var vel = 35 + Math.random() * 55;
-        var tx = Math.cos(ang) * vel, ty = Math.sin(ang) * vel;
-        var col = BURST_COLORS[Math.floor(Math.random() * BURST_COLORS.length)];
-        p.style.cssText = ['width:'+sz+'px','height:'+sz+'px','background:'+col,'left:'+e.clientX+'px','top:'+e.clientY+'px','transition:transform .55s cubic-bezier(.2,.8,.3,1), opacity .45s ease','opacity:1'].join(';');
-        document.body.appendChild(p);
-        requestAnimationFrame(function() {
-          requestAnimationFrame(function() {
-            p.style.transform = 'translate(calc(-50% + ' + tx + 'px), calc(-50% + ' + ty + 'px)) scale(0.1)';
-            p.style.opacity = '0';
-          });
-        });
-        setTimeout(function() { p.remove(); }, 600);
-      })(i);
-    }
-  });
-
-  var HOVER_SEL = 'a,button,[role="button"],.cf-card,.service-card,.contact-card,.work-tab-btn';
-  document.addEventListener('mouseover', function(e) {
-    if (e.target.closest(HOVER_SEL)) { ring.style.width = '46px'; ring.style.height = '46px'; ring.style.borderColor = 'rgba(167,139,250,0.9)'; }
-  });
-  document.addEventListener('mouseout', function(e) {
-    if (e.target.closest(HOVER_SEL)) { ring.style.width = '30px'; ring.style.height = '30px'; ring.style.borderColor = 'rgba(124,79,248,0.75)'; }
-  });
-  document.addEventListener('mouseleave', function() { ring.style.opacity = '0'; dot.style.opacity = '0'; trail.forEach(function(t) { t.el.style.opacity = '0'; }); });
-  document.addEventListener('mouseenter', function() { ring.style.opacity = ''; dot.style.opacity = ''; trail.forEach(function(t, i) { t.el.style.opacity = (0.55 - i * 0.055).toFixed(2); }); });
-})();
 
 // ── Page Loader ──
 (function() {
