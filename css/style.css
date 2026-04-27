@@ -1144,6 +1144,7 @@ footer { background: #0a0f14; border-top: 1px solid rgba(138,157,182,0.16); padd
 @media (prefers-reduced-motion: reduce) {
   .reveal { opacity: 1; transform: none; transition: none; }
   * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  #heroCanvas { opacity: 0.28; }
 }
 
 /* ── Responsive ─── */
@@ -1386,8 +1387,9 @@ button.contact-card { text-align: left; width: 100%; }
 }
 
 #heroCanvas {
-  opacity: 0.38;
+  opacity: 0.52;
   mix-blend-mode: multiply;
+  filter: saturate(1.08);
 }
 
 .hero-glow-1,
