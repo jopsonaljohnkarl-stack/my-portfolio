@@ -1,8 +1,8 @@
 // ─────────────────────────────────────────────────────────────
 //  MAIN — core app logic
-//  Covers: icons, avatar, cursor, particle canvas, navbar,
+//  Covers: icons, avatar, CTA magnetism, particle canvas, navbar,
 //          active nav link, mobile menu, scroll reveals,
-//          smooth scroll, process beam, ring cursor, page loader
+//          smooth scroll, process beam, page loader
 // ─────────────────────────────────────────────────────────────
 
 lucide.createIcons();
@@ -51,25 +51,25 @@ lucide.createIcons();
   });
 })();
 
-// ── Particle Network Canvas ──
+// Light particle network canvas
 (function() {
   const canvas = document.getElementById('heroCanvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
   let W, H, particles, rafId, mouse = { x: -999, y: -999 };
-  const COUNT = 90, CONNECT_DIST = 140, MOUSE_DIST = 120, SPEED = 0.35;
+  const COUNT = 70, CONNECT_DIST = 132, MOUSE_DIST = 115, SPEED = 0.28;
 
   function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
 
   function mkParticle() {
-    const hues = [260, 240, 220, 280, 200];
+    const hues = [210, 216, 222, 204, 198];
     const hue = hues[Math.floor(Math.random() * hues.length)];
-    return { x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - 0.5) * SPEED, vy: (Math.random() - 0.5) * SPEED, r: Math.random() * 1.8 + 0.8, hue, alpha: Math.random() * 0.5 + 0.3 };
+    return { x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - 0.5) * SPEED, vy: (Math.random() - 0.5) * SPEED, r: Math.random() * 1.5 + 0.7, hue, alpha: Math.random() * 0.22 + 0.16 };
   }
 
   function drawFrame() {
     ctx.clearRect(0, 0, W, H);
-    ctx.strokeStyle = 'rgba(108,61,232,0.04)'; ctx.lineWidth = 1;
+    ctx.strokeStyle = 'rgba(79,140,255,0.04)'; ctx.lineWidth = 1;
     const gSize = 48;
     for (let x = 0; x < W; x += gSize) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
     for (let y = 0; y < H; y += gSize) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
@@ -78,9 +78,9 @@ lucide.createIcons();
       const dx = p.x - mouse.x, dy = p.y - mouse.y;
       const dist = Math.sqrt(dx * dx + dy * dy);
       if (dist < MOUSE_DIST) {
-        const force = (MOUSE_DIST - dist) / MOUSE_DIST * 0.8;
-        p.vx += (dx / dist) * force * 0.06;
-        p.vy += (dy / dist) * force * 0.06;
+        const force = (MOUSE_DIST - dist) / MOUSE_DIST * 0.42;
+        p.vx += (dx / dist) * force * 0.04;
+        p.vy += (dy / dist) * force * 0.04;
       }
       const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
       if (speed > SPEED * 2.5) { p.vx *= SPEED * 2.5 / speed; p.vy *= SPEED * 2.5 / speed; }
@@ -88,16 +88,16 @@ lucide.createIcons();
       if (p.x < -10) p.x = W + 10; if (p.x > W + 10) p.x = -10;
       if (p.y < -10) p.y = H + 10; if (p.y > H + 10) p.y = -10;
       const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.r * 4);
-      grad.addColorStop(0, `hsla(${p.hue}, 80%, 75%, ${p.alpha})`);
-      grad.addColorStop(1, `hsla(${p.hue}, 80%, 75%, 0)`);
+      grad.addColorStop(0, `hsla(${p.hue}, 78%, 62%, ${p.alpha})`);
+      grad.addColorStop(1, `hsla(${p.hue}, 78%, 62%, 0)`);
       ctx.beginPath(); ctx.arc(p.x, p.y, p.r * 4, 0, Math.PI * 2); ctx.fillStyle = grad; ctx.fill();
-      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fillStyle = `hsla(${p.hue}, 80%, 80%, ${p.alpha + 0.2})`; ctx.fill();
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fillStyle = `hsla(${p.hue}, 78%, 58%, ${p.alpha + 0.12})`; ctx.fill();
       for (let j = i + 1; j < particles.length; j++) {
         const q = particles[j];
         const ex = p.x - q.x, ey = p.y - q.y, ed = Math.sqrt(ex * ex + ey * ey);
         if (ed < CONNECT_DIST) {
           ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y);
-          ctx.strokeStyle = `hsla(${(p.hue + q.hue) / 2}, 70%, 70%, ${(1 - ed / CONNECT_DIST) * 0.35})`;
+          ctx.strokeStyle = `hsla(${(p.hue + q.hue) / 2}, 72%, 58%, ${(1 - ed / CONNECT_DIST) * 0.16})`;
           ctx.lineWidth = 0.7; ctx.stroke();
         }
       }
