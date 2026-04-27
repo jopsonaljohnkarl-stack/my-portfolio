@@ -929,16 +929,22 @@ footer { background: #0a0f14; border-top: 1px solid rgba(138,157,182,0.16); padd
 
 /* ── Chatbot Widget ─── */
 .cb-bubble {
-  position: fixed; bottom: 28px; right: 28px; z-index: 8000;
-  width: 56px; height: 56px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), #3b82f6);
-  border: none; cursor: pointer;
+  position: fixed; right: 24px; bottom: 28px; z-index: 8000;
+  width: 64px; height: 64px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.18);
+  background: #10131a;
+  box-shadow: 0 12px 34px rgba(0,0,0,0.42);
+  color: #fff; cursor: pointer; overflow: hidden;
   display: flex; align-items: center; justify-content: center;
-  color: #fff; font-size: 1.4rem;
-  box-shadow: 0 4px 24px rgba(124,79,248,0.55), 0 8px 32px rgba(0,0,0,0.4);
-  transition: transform .25s, box-shadow .25s;
+  transition: transform .25s, box-shadow .25s, border-color .25s;
 }
-.cb-bubble:hover { transform: scale(1.1); box-shadow: 0 6px 32px rgba(124,79,248,0.75), 0 12px 40px rgba(0,0,0,0.5); }
+.cb-bubble:hover { transform: scale(1.06); box-shadow: 0 16px 38px rgba(0,0,0,0.48); }
+.cb-bubble-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
 .cb-bubble::after {
   content: ''; position: absolute; inset: -4px; border-radius: 50%;
   border: 2px solid rgba(124,79,248,0.4);
@@ -949,9 +955,15 @@ footer { background: #0a0f14; border-top: 1px solid rgba(138,157,182,0.16); padd
   70%  { transform: scale(1.45); opacity: 0; }
   100% { transform: scale(1.45); opacity: 0; }
 }
-.cb-bubble-icon-open  { display: flex; }
-.cb-bubble-icon-close { display: none; }
-.cb-bubble.open .cb-bubble-icon-open  { display: none; }
+.cb-bubble .cb-bubble-icon-close {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(9, 12, 18, 0.78);
+}
+.cb-bubble.open .cb-bubble-photo { opacity: 0.15; }
 .cb-bubble.open .cb-bubble-icon-close { display: flex; }
 .cb-window {
   position: fixed; bottom: 96px; right: 28px; z-index: 7999;
